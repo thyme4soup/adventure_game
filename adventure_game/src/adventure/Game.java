@@ -44,7 +44,7 @@ public class Game extends JFrame implements ActionListener {
 		setFocusable(true);
 		setVisible(true);
 		console.begin();
-		console.print("You are asleep.");
+		console.print("You are asleep nigga.");
 		//console.print(map.getCurrentTile().toString());
 	}
 
