@@ -24,8 +24,13 @@ public class Recipe {
 	 * @return the Item if the recipe is valid, else null
 	 */
 	public Item isRecipe(ItemStack[] in) {
-		
-		return null;
+		Item toReturn = null;
+		for(ItemStack[] i : recipes.keySet()) {
+			if(in.length == i.length) {
+				//TODO: check if same
+			}
+		}
+		return toReturn;
 	}
 	
 	/**
