@@ -54,15 +54,10 @@ public class Recipe {
 	}
 	
 	private boolean sameElements(Item[] a, Item[] b) {
-		boolean contains = false;
 		for(int i = 0; i < a.length; i++) {
 			for(int j = 0; j < b.length; j++) {
-				if(a[i].is(b[j])) {
-					contains = true;
-					break;
-				}
-				if(!contains) return false;
-				else contains = false;
+				if(a[i].is(b[j])) break;
+				if(j == b.length - 1) return false;
 			}
 		}
 		return true;
@@ -79,10 +74,18 @@ public class Recipe {
 	private boolean canCraft(Item item, Inventory inv) throws NoSuchElementException {
 		Recipe r = getRecipe(item);
 		if(r == null) throw new NoSuchElementException();
+		ArrayList<Item> inventory = inv.getInventory();
 		for(int i = 0; i < r.input.length; i ++) {
-			//make sure account for duplicate item entries
+			if(inventory.isEmpty()) return false;
+			for(int j = 0; j < inventory.size(); j++) {
+				if(r.input[i].is(inventory.get(j))) {
+					inventory.remove(j);
+					break;
+				}
+				if(j == inventory.size() - 1) return false; //inventory does not have a required part
+			}
 		}
-		return false;
+		return true;
 	}
 	
 	/**
@@ -91,8 +94,13 @@ public class Recipe {
 	 * @param inv the players inventory
 	 * @return if the craft was successful
 	 */
-	public boolean craft(Item i, Inventory inv) {
-		if(!canCraft(i, inv)) return false;
+	public boolean craft(Item item, Inventory inv) {
+		if(!canCraft(item, inv)) return false;
+		Recipe r = getRecipe(item);
+		for(int i = 0; i < r.input.length; i++) {
+			inv.remove(r.input[i].name, 1);
+		}
+		inv.add(r.output, 1);
 		return true;
 	}
 }

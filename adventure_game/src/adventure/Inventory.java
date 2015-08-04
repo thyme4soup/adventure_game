@@ -1,5 +1,6 @@
 package adventure;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -73,6 +74,14 @@ public class Inventory {
 			if(i.name.equals(s) || i.name.equals(sname)) return i;
 		}
 		return null;
+	}
+	
+	public ArrayList<Item> getInventory() {
+		ArrayList<Item> a = new ArrayList<>();
+		for(Item i : inventory.keySet()) {
+			a.add(i);
+		}
+		return a;
 	}
 	
 	public void clear() {
