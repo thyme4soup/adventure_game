@@ -12,6 +12,7 @@ public class Player {
 	public boolean awake = false;
 	Inventory inv;
 	
+	
 	public Player(Console console, Game container) {
 		this.x = 7;
 		this.y = 7;
@@ -142,8 +143,17 @@ public class Player {
 		}
 	}
 	
-	public void combine(ArrayList<String> items) {
-		
+	public void combine(Item[] items) {
+		Item toCraft = Recipe.isRecipe(items);
+		if(toCraft == null) {
+			console.print("Nothing happens.");
+		} else {
+			if(Recipe.craft(toCraft, inv)) {
+				console.print("Success!");
+			} else {
+				console.print("You do not have all of those items!");
+			}
+		}
 	}
 	
 	private String toSingular(String name) {

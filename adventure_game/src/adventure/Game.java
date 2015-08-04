@@ -50,7 +50,7 @@ public class Game extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		game = new Game();
-		//game.start();
+		Recipe.createRecipes();
 	}
 	
 	public void death() {
@@ -142,11 +142,17 @@ public class Game extends JFrame implements ActionListener {
 					map.p.use(div[1]);
 				}
 			} else if(command.contains("combine")) {
-				String[] div = command.split("\\s+");
-				if(div.length <= 1) console.unknown();
-				ArrayList<String> items = new ArrayList<String>();
-				for(int i = 1; i < div.length; i++) items.add(div[i]);
-				map.p.combine(items);
+				String[] split = command.split("combine");
+				if(split.length == 0) {
+					console.unknown();
+					timer.start();
+				} else {
+					String[] div = split[1].trim().split("\\s+");
+					for(int i = 0; i < div.length; i++) System.out.println(div[i]);
+					Item[] items = new Item[div.length];
+					for(int i = 0; i < div.length; i++) items[i] = new Item(div[i]);
+					map.p.combine(items);
+				}
 			} else if(command.contains("drink") || command.contains("water")) {
 				map.drink();
 			} else if(command.contains("climb") && command.contains("tree")) {

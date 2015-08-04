@@ -28,7 +28,7 @@ public class Recipe {
 		recipes.add(new Recipe(new Item[] {stick, rock}, hammer));
 	}
 	
-	public Recipe getRecipe(Item i) {
+	public static Recipe getRecipe(Item i) {
 		for(Recipe r : recipes) {
 			if(r.output.is(i)) return r;
 		}
@@ -40,7 +40,7 @@ public class Recipe {
 	 * @param in the item stack to check
 	 * @return the Item if the recipe is valid, else null
 	 */
-	public Item isRecipe(Item[] in) {
+	public static Item isRecipe(Item[] in) {
 		Item toReturn = null;
 		for(Recipe r : recipes) {
 			if(in.length == r.input.length) {
@@ -53,7 +53,7 @@ public class Recipe {
 		return toReturn;
 	}
 	
-	private boolean sameElements(Item[] a, Item[] b) {
+	private static boolean sameElements(Item[] a, Item[] b) {
 		for(int i = 0; i < a.length; i++) {
 			for(int j = 0; j < b.length; j++) {
 				if(a[i].is(b[j])) break;
@@ -69,11 +69,10 @@ public class Recipe {
 	 * @param i the desired item to craft
 	 * @param inv the players inventory
 	 * @return if the player has items to craft an item
-	 * @throws NoSuchElementException if there is no recipe for the specified item
 	 */
-	private boolean canCraft(Item item, Inventory inv) throws NoSuchElementException {
+	private static boolean canCraft(Item item, Inventory inv) {
 		Recipe r = getRecipe(item);
-		if(r == null) throw new NoSuchElementException();
+		if(r == null) return false;
 		ArrayList<Item> inventory = inv.getInventory();
 		for(int i = 0; i < r.input.length; i ++) {
 			if(inventory.isEmpty()) return false;
@@ -94,7 +93,7 @@ public class Recipe {
 	 * @param inv the players inventory
 	 * @return if the craft was successful
 	 */
-	public boolean craft(Item item, Inventory inv) {
+	public static boolean craft(Item item, Inventory inv) {
 		if(!canCraft(item, inv)) return false;
 		Recipe r = getRecipe(item);
 		for(int i = 0; i < r.input.length; i++) {
