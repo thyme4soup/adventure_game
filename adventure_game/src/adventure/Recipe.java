@@ -3,6 +3,7 @@ package adventure;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Recipe {
 	private static ArrayList<Recipe> recipes; //input, output
@@ -25,6 +26,13 @@ public class Recipe {
 		
 		//add recipes
 		recipes.add(new Recipe(new Item[] {stick, rock}, hammer));
+	}
+	
+	public Recipe getRecipe(Item i) {
+		for(Recipe r : recipes) {
+			if(r.output.is(i)) return r;
+		}
+		return null;
 	}
 	
 	/**
@@ -66,9 +74,14 @@ public class Recipe {
 	 * @param i the desired item to craft
 	 * @param inv the players inventory
 	 * @return if the player has items to craft an item
+	 * @throws NoSuchElementException if there is no recipe for the specified item
 	 */
-	private boolean canCraft(Item i, Inventory inv) {
-		
+	private boolean canCraft(Item item, Inventory inv) throws NoSuchElementException {
+		Recipe r = getRecipe(item);
+		if(r == null) throw new NoSuchElementException();
+		for(int i = 0; i < r.input.length; i ++) {
+			//make sure account for duplicate item entries
+		}
 		return false;
 	}
 	
