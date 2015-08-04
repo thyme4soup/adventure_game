@@ -9,15 +9,17 @@ public class Recipe {
 	private static ArrayList<Recipe> recipes; //input, output
 	private Item[] input;
 	private Item output; //for simplicity, each recipe only has one output
+	public String msg;
 	
 	//initialize items
 	private static Item stick = new Item("stick");
 	private static Item rock = new Item("rock");
 	private static Item hammer = new Item("hammer");
 	
-	public Recipe(Item[] in, Item out) {
+	public Recipe(Item[] in, Item out, String msg) {
 		input = in;
 		output = out;
+		this.msg = msg;
 	}
 	
 	public static void createRecipes() {
@@ -25,7 +27,8 @@ public class Recipe {
 		recipes = new ArrayList<>();
 		
 		//add recipes
-		recipes.add(new Recipe(new Item[] {stick, rock}, hammer));
+		recipes.add(new Recipe(new Item[] {stick, rock}, hammer, 
+				"You combine the stick and rock to make a hammer."));
 	}
 	
 	public static Recipe getRecipe(Item i) {

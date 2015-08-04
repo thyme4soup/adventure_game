@@ -148,7 +148,7 @@ public class Game extends JFrame implements ActionListener {
 					timer.start();
 				} else {
 					String[] div = split[1].trim().split("\\s+");
-					for(int i = 0; i < div.length; i++) System.out.println(div[i]);
+					//for(int i = 0; i < div.length; i++) System.out.println(div[i]);
 					Item[] items = new Item[div.length];
 					for(int i = 0; i < div.length; i++) items[i] = new Item(div[i]);
 					map.p.combine(items);
