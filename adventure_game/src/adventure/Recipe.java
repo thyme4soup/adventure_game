@@ -1,21 +1,30 @@
 package adventure;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Recipe {
-	private static Map<ItemStack[], ItemStack> recipes; //input, output
+	private static ArrayList<Recipe> recipes; //input, output
+	private Item[] input;
+	private Item output; //for simplicity, each recipe only has one output
 	
-	//stores the defined recipes in map
+	//initialize items
+	private static Item stick = new Item("stick");
+	private static Item rock = new Item("rock");
+	private static Item hammer = new Item("hammer");
+	
+	public Recipe(Item[] in, Item out) {
+		input = in;
+		output = out;
+	}
+	
 	public static void createRecipes() {
-		//init recipes
-		recipes = new HashMap<>();
+		//initialize recipes
+		recipes = new ArrayList<>();
 		
-		ItemStack stick = new ItemStack(new Item("stick"), 1);
-		ItemStack rock = new ItemStack(new Item("rock"), 1);
-		ItemStack hammer = new ItemStack(new Item("hammer"), 1);
-		
-		recipes.put(new ItemStack[] {stick, rock}, hammer);
+		//add recipes
+		recipes.add(new Recipe(new Item[] {stick, rock}, hammer));
 	}
 	
 	/**
@@ -23,10 +32,10 @@ public class Recipe {
 	 * @param in the item stack to check
 	 * @return the Item if the recipe is valid, else null
 	 */
-	public Item isRecipe(ItemStack[] in) {
+	public Item isRecipe(Item[] in) {
 		Item toReturn = null;
-		for(ItemStack[] i : recipes.keySet()) {
-			if(in.length == i.length) {
+		for(Recipe r : recipes) {
+			if(in.length == r.input.length) {
 				//TODO: check if same
 			}
 		}
@@ -40,7 +49,7 @@ public class Recipe {
 	 * @param inv the players inventory
 	 * @return if the player has items to craft an item
 	 */
-	private boolean canCraft(ItemStack i, Inventory inv) {
+	private boolean canCraft(Item i, Inventory inv) {
 		
 		return false;
 	}
@@ -51,13 +60,13 @@ public class Recipe {
 	 * @param inv the players inventory
 	 * @return if the craft was successful
 	 */
-	public boolean craft(ItemStack i, Inventory inv) {
+	public boolean craft(Item i, Inventory inv) {
 		if(!canCraft(i, inv)) return false;
 		return true;
 	}
 }
 
-//helper class
+/*helper class
 class ItemStack {
 	Item item;
 	int quantity;
@@ -66,4 +75,4 @@ class ItemStack {
 		this.item = new Item(item.toString());
 		quantity = n;
 	}
-}
+}*/
