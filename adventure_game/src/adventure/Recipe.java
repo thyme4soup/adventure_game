@@ -36,10 +36,28 @@ public class Recipe {
 		Item toReturn = null;
 		for(Recipe r : recipes) {
 			if(in.length == r.input.length) {
-				//TODO: check if same
+				if(sameElements(in, r.input)) {
+					toReturn = r.output;
+					break;
+				}
 			}
 		}
 		return toReturn;
+	}
+	
+	private boolean sameElements(Item[] a, Item[] b) {
+		boolean contains = false;
+		for(int i = 0; i < a.length; i++) {
+			for(int j = 0; j < b.length; j++) {
+				if(a[i].is(b[j])) {
+					contains = true;
+					break;
+				}
+				if(!contains) return false;
+				else contains = false;
+			}
+		}
+		return true;
 	}
 	
 	/**
