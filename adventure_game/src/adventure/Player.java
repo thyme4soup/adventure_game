@@ -135,6 +135,8 @@ public class Player {
 		} else {
 			if(Recipe.craft(toCraft, inv)) {
 				console.print(Recipe.getRecipe(toCraft).msg);
+				decFood(1);
+				decWater(1);
 			} else {
 				console.print("You do not have all of those items!");
 			}
