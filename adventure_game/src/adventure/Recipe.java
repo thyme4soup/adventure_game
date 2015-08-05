@@ -11,13 +11,6 @@ public class Recipe {
 	private Item output; //for simplicity, each recipe only has one output
 	public String msg;
 	
-	//initialize items
-	private static Item stick = new Item("stick");
-	private static Item rock = new Item("rock");
-	private static Item hammer = new Item("hammer");
-	private static Item sharp = new Item("sharp");
-	private static Item axe = new Item("axe");
-	
 	public Recipe(Item[] in, Item out, String msg) {
 		input = in;
 		output = out;
@@ -29,9 +22,9 @@ public class Recipe {
 		recipes = new ArrayList<>();
 		
 		//add recipes
-		recipes.add(new Recipe(new Item[] {stick, rock}, hammer, 
+		recipes.add(new Recipe(new Item[] {Item.stick, Item.rock}, Item.hammer, 
 				"You combine a stick and a rock to make a hammer."));
-		recipes.add(new Recipe(new Item[] {sharp, stick}, axe,
+		recipes.add(new Recipe(new Item[] {Item.sharp, Item.stick}, Item.axe,
 				"You combine a sharp rock and a stick to make an axe."));
 	}
 	

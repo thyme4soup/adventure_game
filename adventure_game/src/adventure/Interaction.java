@@ -8,12 +8,6 @@ public class Interaction {
 	private String entity;
 	private boolean removeEntity;
 	public String msg;
-	
-	//initialize items
-	private static Item stick = new Item("stick");
-	private static Item rock = new Item("rock");
-	private static Item sharp = new Item("sharp");
-	private static Item hammer = new Item("hammer");
 
 	public Interaction(Item input, Item output, String entity, boolean remove, String msg) {
 		this.input = input;
@@ -27,8 +21,10 @@ public class Interaction {
 		interactions = new ArrayList<>();
 		
 		//add new interactions here
-		interactions.add(new Interaction(hammer, sharp, "rock", true,
+		interactions.add(new Interaction(Item.hammer, Item.sharp, "rock", true,
 				"You hammer away at the rock, and get some sharprocks."));
+		interactions.add(new Interaction(Item.axe, Item.wood, "tree", true,
+				"You chop away at the tree, and get some wood."));
 	}
 	
 	/**
