@@ -140,7 +140,7 @@ public class Game extends JFrame implements ActionListener {
 					console.unknown();
 					timer.start();
 				} else {
-					map.use(div[1]);
+					map.use(new Item(div[1]));
 				}
 			} else if(command.contains("combine")) {
 				String[] split = command.split("combine");
