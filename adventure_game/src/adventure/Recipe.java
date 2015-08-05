@@ -15,6 +15,8 @@ public class Recipe {
 	private static Item stick = new Item("stick");
 	private static Item rock = new Item("rock");
 	private static Item hammer = new Item("hammer");
+	private static Item sharp = new Item("sharp");
+	private static Item axe = new Item("axe");
 	
 	public Recipe(Item[] in, Item out, String msg) {
 		input = in;
@@ -29,6 +31,8 @@ public class Recipe {
 		//add recipes
 		recipes.add(new Recipe(new Item[] {stick, rock}, hammer, 
 				"You combine a stick and a rock to make a hammer."));
+		recipes.add(new Recipe(new Item[] {sharp, stick}, axe,
+				"You combine a sharp rock and a stick to make an axe."));
 	}
 	
 	public static Recipe getRecipe(Item i) {
