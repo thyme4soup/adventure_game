@@ -50,6 +50,7 @@ public class Game extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		game = new Game();
+		Item.initializeItems();
 		Recipe.createRecipes();
 		Interaction.createInteractions();
 	}
