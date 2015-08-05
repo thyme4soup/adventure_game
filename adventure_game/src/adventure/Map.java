@@ -2,6 +2,7 @@ package adventure;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -198,10 +199,48 @@ public class Map extends JPanel {
 		}
 	}
 	
+	/*
+	 * THIS METHOD IS FOR USE WITH THE INTERACTION CLASS.
+	 * USE ITEM FROM THE PLAYER'S INVENTORY ON ENVIRONMENT.
+	 */
+	public void use(String name) {
+		name = p.toSingular(name);
+		switch(name) {
+		case "stick":
+			if(p.inv.contains("stick")) {
+				if(p.inv.contains("rock")) {
+					console.print("You tie the rock to the stick. It looks a bit like a hammer");
+					p.inv.remove("stick", 1);
+					p.inv.remove("rock", 1);
+					p.inv.add(new Item("hammer"), 1);
+				} else console.print("If only you had a rock... that would be something.");
+			} else console.print("You don't have any sticks.");
+			break;
+		default:
+			console.print("You don't know what that is.");
+			break;
+		}
+	}
+	
 	public void pray() {
 		if(getCurrentTile().contains("altar")) {
 			console.print("You kneel at the altar and pray for a while. You feel a bit better.");
-		} else console.print("Nothing happens.");
+		} else {
+			int choice = rand.nextInt(3);
+			switch (choice) {
+				case 0:
+					console.print("There's no church in the wild.");
+					break;
+				case 1:
+					console.print("What's a god to a non-believer?");
+					break;
+				case 2:
+					console.print("You cry out to a non-existent god.");
+					break;
+				default:
+						
+			}
+		}
 	}
 	
 	public void toss(String name, int amount) {
