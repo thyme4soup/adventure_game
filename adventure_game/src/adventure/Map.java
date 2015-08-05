@@ -203,22 +203,16 @@ public class Map extends JPanel {
 	 * THIS METHOD IS FOR USE WITH THE INTERACTION CLASS.
 	 * USE ITEM FROM THE PLAYER'S INVENTORY ON ENVIRONMENT.
 	 */
-	public void use(String name) {
-		name = p.toSingular(name);
-		switch(name) {
-		case "stick":
-			if(p.inv.contains("stick")) {
-				if(p.inv.contains("rock")) {
-					console.print("You tie the rock to the stick. It looks a bit like a hammer");
-					p.inv.remove("stick", 1);
-					p.inv.remove("rock", 1);
-					p.inv.add(new Item("hammer"), 1);
-				} else console.print("If only you had a rock... that would be something.");
-			} else console.print("You don't have any sticks.");
-			break;
-		default:
-			console.print("You don't know what that is.");
-			break;
+	public void use(String itemName) {
+		Item item = new Item(itemName);
+		if(!p.inv.contains(item.name)) console.print("You don't have a " + itemName + ".");
+		else {
+			Interaction in = Interaction.getInteraction(item, getCurrentTile().entities);
+			if(in == null) console.print("Nothing to use the " + item.name + " with.");
+			else {
+				Interaction.interact(in, getCurrentTile(), p.inv);
+				console.print(in.msg);
+			}
 		}
 	}
 	
