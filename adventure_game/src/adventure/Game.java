@@ -51,6 +51,7 @@ public class Game extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		game = new Game();
 		Recipe.createRecipes();
+		Interaction.createInteractions();
 	}
 	
 	public void death() {
@@ -136,11 +137,11 @@ public class Game extends JFrame implements ActionListener {
 			} else if(command.contains("use")) { 
 				//TODO: edit so command is of format: use [item] on [entity]
 				String[] div = command.split("\\s+");
-				if(div.length <= 1) {
+				if(div.length <= 1 || div.length > 2) {
 					console.unknown();
 					timer.start();
 				} else {
-					map.use(new Item(div[1]));
+					map.use(div[1]);
 				}
 			} else if(command.contains("combine")) {
 				String[] split = command.split("combine");
