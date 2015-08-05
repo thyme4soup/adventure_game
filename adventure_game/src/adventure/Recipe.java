@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Recipe {
-	private static ArrayList<Recipe> recipes; //input, output
+	private static ArrayList<Recipe> recipes;
 	private Item[] input;
 	private Item output; //for simplicity, each recipe only has one output
 	public String msg;
@@ -28,7 +28,7 @@ public class Recipe {
 		
 		//add recipes
 		recipes.add(new Recipe(new Item[] {stick, rock}, hammer, 
-				"You combine the stick and rock to make a hammer."));
+				"You combine a stick and a rock to make a hammer."));
 	}
 	
 	public static Recipe getRecipe(Item i) {
