@@ -212,6 +212,8 @@ public class Map extends JPanel {
 			else {
 				Interaction.interact(in, getCurrentTile(), p.inv);
 				console.print(in.msg);
+				p.decFood(1);
+				p.decWater(1);
 			}
 		}
 	}
