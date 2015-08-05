@@ -6,7 +6,7 @@ public class Item {
 		"stick",
 		"rock",
 		"hammer",
-		"sharprock"
+		"sharp"
 	};
 	
 	public Item(String name) {
