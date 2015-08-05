@@ -124,25 +124,10 @@ public class Player {
 		if(water > maxWater) water = maxWater;
 	}
 	
-	public void use(String name) {
-		name = toSingular(name);
-		switch(name) {
-		case "stick":
-			if(inv.contains("stick")) {
-				if(inv.contains("rock")) {
-					console.print("You tie the rock to the stick. It looks a bit like a hammer");
-					inv.remove("stick", 1);
-					inv.remove("rock", 1);
-					inv.add(new Item("hammer"), 1);
-				} else console.print("If only you had a rock... that would be something.");
-			} else console.print("You don't have any sticks.");
-			break;
-		default:
-			console.print("You don't know what that is.");
-			break;
-		}
-	}
-	
+	/*
+	 * THIS METHOD IS FOR USE WITH THE RECIPE CLASS.
+	 * COMBINE MULTIPLE ITEMS FROM THE PLAYER'S INVENTORY.
+	 */
 	public void combine(Item[] items) {
 		Item toCraft = Recipe.isRecipe(items);
 		if(toCraft == null) {
@@ -156,7 +141,7 @@ public class Player {
 		}
 	}
 	
-	private String toSingular(String name) {
+	public String toSingular(String name) {
 		for(Item i : inv.inventory.keySet()) {
 			if(name.contains(i.name)) name = i.name;
 		}
