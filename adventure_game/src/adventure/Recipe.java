@@ -56,7 +56,10 @@ public class Recipe {
 	private static boolean sameElements(Item[] a, Item[] b) {
 		for(int i = 0; i < a.length; i++) {
 			for(int j = 0; j < b.length; j++) {
-				if(a[i].is(b[j])) break;
+				if(a[i].is(b[j])) {
+					a[i] = Item.null_item;
+					break;
+				}
 				if(j == b.length - 1) return false;
 			}
 		}
