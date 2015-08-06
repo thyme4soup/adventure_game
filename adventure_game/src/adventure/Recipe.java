@@ -24,7 +24,7 @@ public class Recipe {
 		//add recipes
 		recipes.add(new Recipe(new Item[] {Item.stick, Item.rock}, Item.hammer, 
 				"You combine a stick and a rock to make a hammer."));
-		recipes.add(new Recipe(new Item[] {Item.sharp, Item.stick}, Item.axe,
+		recipes.add(new Recipe(new Item[] {Item.sharp_rock, Item.stick}, Item.axe,
 				"You combine a sharp rock and a stick to make an axe."));
 	}
 	
