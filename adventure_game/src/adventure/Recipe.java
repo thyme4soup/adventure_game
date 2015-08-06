@@ -53,14 +53,18 @@ public class Recipe {
 		return toReturn;
 	}
 	
-	private static boolean sameElements(Item[] a, Item[] b) {
-		for(int i = 0; i < a.length; i++) {
-			for(int j = 0; j < b.length; j++) {
-				if(a[i].is(b[j])) {
-					a[i] = Item.null_item;
+	private static boolean sameElements(Item[] player, Item[] recipe) {
+		//duplicate recipe to not affect static recipe
+		Item[] toCheck = new Item[recipe.length];
+		for(int a = 0; a < recipe.length; a++) toCheck[a] = recipe[a];
+		
+		for(int i = 0; i < toCheck.length; i++) {
+			for(int j = 0; j < player.length; j++) {
+				if(toCheck[i].is(player[j])) {
+					toCheck[i] = Item.null_item;
 					break;
 				}
-				if(j == b.length - 1) return false;
+				if(j == player.length - 1) return false;
 			}
 		}
 		return true;
