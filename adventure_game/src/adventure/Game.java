@@ -1,12 +1,8 @@
 package adventure;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -145,13 +141,36 @@ public class Game extends JFrame implements ActionListener {
 					map.use(div[1]);
 				}
 			} else if(command.contains("combine")) {
-				ArrayList<Item> itemList = new ArrayList<Item>();
-				for(Item i : map.p.inv.inventory.keySet()) {
-					if(command.contains(i.name)) itemList.add(new Item(i.name));
+				ArrayList<Item> items = new ArrayList<>();
+				if(command.trim().length() == 7) {
+					console.unknown();
+					timer.start();
+				} else {
+					command = command.replace("combine", "").trim();
+					int sizeInv = map.p.inv.size();
+					for(Item i : Item.itemList) {
+						if(sizeInv == 0 && !items.isEmpty()) break;
+						if(command.contains(i.name)) {
+							if(!map.p.inv.contains(i.name)) {
+								items.clear();
+								break;
+							} else {
+								while(command.contains(i.name)) {
+									items.add(new Item(i.name));
+									command = command.replaceFirst(i.name, "");
+									sizeInv--;
+								}
+							}
+						}
+					}
+					if(!items.isEmpty()) {
+						Item[] list = new Item[items.size()];
+						for(int i = 0; i < list.length; i++) {
+							list[i] = items.get(i);
+						}
+						map.p.combine(list);
+					} else console.print("You don't have all of those items!");
 				}
-				Item[] items = new Item[itemList.size()];
-				for(int i = 0; i < items.length; i++) items[i] = itemList.get(i);
-				map.p.combine(items);
 			} else if(command.contains("drink") || command.contains("water")) {
 				map.drink();
 			} else if(command.contains("climb") && command.contains("tree")) {
