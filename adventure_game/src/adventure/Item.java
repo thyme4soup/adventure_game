@@ -13,6 +13,7 @@ public class Item {
 	public static Item hammer = new Item("hammer");
 	public static Item axe = new Item("axe");
 	public static Item wood = new Item("wood");
+	public static Item null_item = new Item("null");
 	
 	public static void initializeItems() {
 		//ITEMS WHOSE NAMES CONTAIN ANOTHER ITEM MUST GO BEFORE
@@ -24,6 +25,7 @@ public class Item {
 		itemList.add(hammer);
 		itemList.add(axe);
 		itemList.add(wood);
+		itemList.add(null_item);
 	}
 	
 	public Item(String name) {
