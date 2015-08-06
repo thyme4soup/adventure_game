@@ -145,17 +145,13 @@ public class Game extends JFrame implements ActionListener {
 					map.use(div[1]);
 				}
 			} else if(command.contains("combine")) {
-				String[] split = command.split("combine");
-				if(split.length == 0) {
-					console.unknown();
-					timer.start();
-				} else {
-					String[] div = split[1].trim().split("\\s+");
-					//for(int i = 0; i < div.length; i++) System.out.println(div[i]);
-					Item[] items = new Item[div.length];
-					for(int i = 0; i < div.length; i++) items[i] = new Item(div[i]);
-					map.p.combine(items);
+				ArrayList<Item> itemList = new ArrayList<Item>();
+				for(Item i : map.p.inv.inventory.keySet()) {
+					if(command.contains(i.name)) itemList.add(new Item(i.name));
 				}
+				Item[] items = new Item[itemList.size()];
+				for(int i = 0; i < items.length; i++) items[i] = itemList.get(i);
+				map.p.combine(items);
 			} else if(command.contains("drink") || command.contains("water")) {
 				map.drink();
 			} else if(command.contains("climb") && command.contains("tree")) {
