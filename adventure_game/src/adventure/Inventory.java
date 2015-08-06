@@ -84,6 +84,14 @@ public class Inventory {
 		return a;
 	}
 	
+	public int size() {
+		int i = 0;
+		for(Item item : inventory.keySet()) {
+			i++;
+		}
+		return i;
+	}
+	
 	public void clear() {
 		inventory.clear();
 	}
