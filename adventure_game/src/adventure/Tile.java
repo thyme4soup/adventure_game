@@ -147,7 +147,7 @@ public class Tile extends JPanel{
 		return result + ".";
 	}
 	
-	public void setFade(Color c) {fade = c;}
+	public static void setFade(Color c) {fade = c;}
 	
 	@Override
 	public void paintComponent(Graphics g) {

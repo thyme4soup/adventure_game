@@ -55,7 +55,7 @@ public class Player {
 		String status = "";
 		if(100*food/maxFood <= 20) {
 			status = "You are dying of hunger";
-			health--;
+			decHealth(1);
 		}
 		else if(100*food/maxFood <= 40) status = "You need food";
 		else if(100*food/maxFood <= 60) status = "You feel a little hungry";
@@ -67,7 +67,7 @@ public class Player {
 		
 		if(100*water/maxWater <= 20) {
 			status += "ou are dying of thirst";
-			health--;
+			decHealth(1);
 		}
 		else if(100*water/maxWater <= 40) status += "ou need water";
 		else if(100*water/maxWater <= 60) status += "ou feel a little thirsty";
@@ -97,7 +97,7 @@ public class Player {
 		switch(type) {
 		case "village":
 			console.print("The world seems smaller.");
-			maxFood += 2;
+			maxFood += 3;
 			maxWater += 2;
 			container.map.survey();
 			break;
@@ -114,6 +114,11 @@ public class Player {
 	public void decWater(int n) {
 		water-= n;
 		if(water < 0) water = 0;
+	}
+	
+	public void decHealth(int n) {
+		health -= n;
+		if(health > 0) container.flashRed();
 	}
 	
 	public void addFood(int n) {

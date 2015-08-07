@@ -226,6 +226,10 @@ public class Game extends JFrame implements ActionListener {
 		Tile.fade = map.getPlayer().getFade();
 		map.repaint();
 	}
+	
+	public void flashRed() {
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
