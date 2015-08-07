@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -25,6 +27,15 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	Game container;
 	GridBagConstraints c;
 	static boolean animating = false;
+	
+	static final String[] hints = new String[] {
+		"You grow restless. Go north, if not south, west, or east.",
+		"A flock of birds fly overhead, going south. Winter is coming.",
+		"If only you had a stick and a rock, you could make a hammer.",
+		"If only you had a stick and something sharp, you could make an axe.",
+		"You catch the faint smell of cooking meat.",
+		"You see heavy, rain-filled clouds on the horizon."
+	};
 	
 	public Console(int x, int y, int border, Game container) {
 		this.x = x;
@@ -105,6 +116,18 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void unknown() {
+		Game.unknownCounter++;
+		Game.unknownCalled = true;
+		
+		if(Game.unknownCounter > 1 && Game.unknownCounter % 4 == 0) {
+			if(container.map.p.awake) {
+				Random r = new Random();
+				print(hints[r.nextInt(hints.length)]);
+			} else {
+				print("Through the veil of sleep you feel a faint breeze on your face. It's time to wake up.");
+			}
+		}
+		
 		field.setBackground(new Color(225, 131, 131));
 		animating = true;
 	}

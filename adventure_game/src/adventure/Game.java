@@ -17,6 +17,9 @@ public class Game extends JFrame implements ActionListener {
 	static Console console;
 	static Timer timer;
 	
+	static int unknownCounter = 0;
+	static boolean unknownCalled = false;
+	
 	public Game() {
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setSize(gameX + 2*borderW, mapY + consoleY + 2*borderW);
@@ -74,7 +77,7 @@ public class Game extends JFrame implements ActionListener {
 		} else if(command.equals("exit")) {
 			System.exit(0);
 			return;
-		} else if(command.equals("help") || command.equals("what")) {
+		} else if(command.contains("help") || command.equals("what") || command.contains("wtf")) {
 			if(!map.p.awake)
 				console.print("You are still asleep.");
 			else if(map.p.awake) {
@@ -216,6 +219,10 @@ public class Game extends JFrame implements ActionListener {
 			console.unknown();
 			timer.start();
 		}
+		
+		if(!unknownCalled) unknownCounter = 0;
+		else unknownCalled = false;
+		
 		Tile.fade = map.getPlayer().getFade();
 		map.repaint();
 	}
