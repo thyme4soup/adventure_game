@@ -258,7 +258,12 @@ public class Map extends JPanel {
 		boolean moved = false;
 		switch(dir) {
 		case 0:
-			console.print("You gather your things and head north.");
+			if(getCurrentTile().contains("village")) {
+				console.print("You leave the safety of the village and head north into the wild," 
+						+ " where you'll have to find your own food and water.");
+			} else {
+				console.print("You gather your things and head north.");
+			}
 			if(p.y > 0) {
 				p.up();
 				moved = true;
@@ -267,7 +272,12 @@ public class Map extends JPanel {
 					+ " You can't go any further. You turn around and head back.");
 			break;
 		case 1:
-			console.print("You gather your things and head west.");
+			if(getCurrentTile().contains("village")) {
+				console.print("You leave the safety of the village and head west into the wild," 
+						+ " where you'll have to find your own food and water.");
+			} else {
+				console.print("You gather your things and head west.");
+			}
 			if(p.x > 0) {
 				p.left();
 				moved = true;
@@ -276,7 +286,12 @@ public class Map extends JPanel {
 					+ "further. You turn around and head back.");
 			break;
 		case 2:
-			console.print("You gather your things and head south.");
+			if(getCurrentTile().contains("village")) {
+				console.print("You leave the safety of the village and head south into the wild," 
+						+ " where you'll have to find your own food and water.");
+			} else {
+				console.print("You gather your things and head south.");
+			}
 			if(p.y < 14) {
 				p.down();
 				moved = true;
@@ -285,7 +300,12 @@ public class Map extends JPanel {
 					+ "You can't go any further. You turn around and head back");
 			break;
 		case 3:
-			console.print("You gather your things and head east.");
+			if(getCurrentTile().contains("village")) {
+				console.print("You leave the safety of the village and head east into the wild," 
+						+ " where you'll have to find your own food and water.");
+			} else {
+				console.print("You gather your things and head east.");
+			}
 			if(p.x < 14) {
 				p.right();
 				moved = true;
