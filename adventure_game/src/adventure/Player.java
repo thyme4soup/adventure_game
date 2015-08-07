@@ -18,9 +18,9 @@ public class Player {
 		this.y = 7;
 		this.console = console;
 		this.container = container;
-		maxFood = 20;
-		maxWater = 15;
-		maxHealth = 20;
+		maxFood = 10;
+		maxWater = 8;
+		maxHealth = 15;
 		food = maxFood;
 		water = maxWater;
 		health = maxHealth;
@@ -50,25 +50,27 @@ public class Player {
 	public void update() {
 		decFood(1);
 		decWater(1);
+		//System.out.println("food %: " + (100*food/maxFood));
+		//System.out.println("water %: " + (100*water/maxWater));
 		String status = "";
-		if(food < 4) {
+		if(100*food/maxFood <= 20) {
 			status = "You are dying of hunger";
 			health--;
 		}
-		else if(food < 7) status = "You need food";
-		else if(food < 10) status = "You feel a little hungry";
+		else if(100*food/maxFood <= 40) status = "You need food";
+		else if(100*food/maxFood <= 60) status = "You feel a little hungry";
 		
-		if(water < 10) {
+		if(100*water/maxWater <= 60) {
 			if(!status.equals("")) status += " and y";
 			else status += "Y";
 		}
 		
-		if(water < 4) {
+		if(100*water/maxWater <= 20) {
 			status += "ou are dying of thirst";
 			health--;
 		}
-		else if(water < 7) status += "ou need water";
-		else if(water < 10) status += "ou feel a little thirsty";
+		else if(100*water/maxWater <= 40) status += "ou need water";
+		else if(100*water/maxWater <= 60) status += "ou feel a little thirsty";
 		
 		status += ".";
 		if(status.length() > 3) console.print(status);
@@ -76,12 +78,12 @@ public class Player {
 	
 	public Color getFade() {
 		int alpha = 0;
-		int x = Math.min(food, water);
-		if(x < 4) {
+		int x = Math.min((100*food/maxFood), (100*water/maxWater));
+		if(x <= 20) {
 			alpha = 100 + (120 - (int)(120 * ((float)health/(float)maxHealth)));
-		} else if(x < 7) {
+		} else if(x <= 40) {
 			alpha = 50;
-		} else if(x < 10) {
+		} else if(x <= 60) {
 			alpha = 25;
 		}
 		
