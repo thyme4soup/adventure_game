@@ -162,4 +162,8 @@ public class Player {
 	public void maxWater() {water = maxWater;}
 	
 	public void maxHealth() {health = maxHealth;}
+
+	public boolean hasWeapon() {
+		return false;
+	}
 }
