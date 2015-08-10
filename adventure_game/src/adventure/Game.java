@@ -109,8 +109,7 @@ public class Game extends JFrame implements ActionListener {
 				} else if(command.contains("rock")) {
 					map.collect("rock");
 				} else {
-					console.unknown();
-					timer.start();
+					console.print("You don't see any of those around.");
 				}
 			} else if(command.contains("toss")) {
 				String[] div = command.split("\\s+");
@@ -189,10 +188,10 @@ public class Game extends JFrame implements ActionListener {
 					if(map.p.hasWeapon()) {
 						
 						//TODO: add pillaging functionality... maybe remove village? increase maxes?
-						console.print("You pillage the village... but I'm not a rapper");
+						console.print("You pillage the village... but I'm not a rapper.");
 						
 					}
-					else console.print("You lack the weapons to do that");
+					else console.print("You lack the weapons to do that.");
 				}
 				else console.print("There are no villages in sight.");
 			} else if(command.contains("eat") || command.contains("food")) {

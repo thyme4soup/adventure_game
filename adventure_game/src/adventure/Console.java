@@ -65,7 +65,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 			labels[i].setForeground(new Color(120 + 15*i, 120 + 15*i, 120 + 15*i));
 			c.gridy = i;
 			add(labels[i], c);
-		}	
+		}
 		c.insets = new Insets(6,0,0,0);
 		c.gridy++;
 		add(field, c);
