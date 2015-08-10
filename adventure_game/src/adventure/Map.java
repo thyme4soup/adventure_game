@@ -20,7 +20,6 @@ public class Map extends JPanel {
 	static int dist = 4;
 	static Random rand;
 	
-	//TODO: make map yeeeloh bc punds
 	
 	public Map(int x, int y, int border, Console console, Game container) {
 		this.x = x;
