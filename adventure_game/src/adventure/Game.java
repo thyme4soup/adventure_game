@@ -184,6 +184,17 @@ public class Game extends JFrame implements ActionListener {
 				} else {
 					console.print("There are no trees to climb.");
 				}
+			} else if(command.contains("pillage") && command.contains("village")) {
+				if(map.getCurrentTile().contains("village")) {
+					if(map.p.hasWeapon()) {
+						
+						//TODO: add pillaging functionality... maybe remove village? increase maxes?
+						console.print("You pillage the village... but I'm not a rapper");
+						
+					}
+					else console.print("You lack the weapons to do that");
+				}
+				else console.print("There are no villages in sight.");
 			} else if(command.contains("eat") || command.contains("food")) {
 				map.eat();
 			} else if(command.contains("sleep") || command.contains("rest")) {
