@@ -11,6 +11,7 @@ public class Player {
 	private Game container;
 	public boolean awake = false;
 	Inventory inv;
+	public int razeCount;
 	
 	
 	public Player(Console console, Game container) {
@@ -21,6 +22,7 @@ public class Player {
 		maxFood = 10;
 		maxWater = 8;
 		maxHealth = 15;
+		razeCount = 0;
 		food = maxFood;
 		water = maxWater;
 		health = maxHealth;
@@ -164,6 +166,10 @@ public class Player {
 	public void maxHealth() {health = maxHealth;}
 
 	public boolean hasWeapon() {
+		String[] weapons = new String[]{"axe", "sword"};
+		for(String s : weapons) {
+			if(inv.contains(s)) return true;
+		}
 		return false;
 	}
 }

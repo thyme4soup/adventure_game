@@ -219,7 +219,12 @@ public class Map extends JPanel {
 	
 	public void pray() {
 		if(getCurrentTile().contains("altar")) {
-			console.print("You kneel at the altar and pray for a while. You feel a bit better.");
+			if(p.razeCount <= 0)
+				console.print("You kneel at the altar and pray for a while. You feel a bit better.");
+			else if(p.razeCount <= 2)
+				console.print("You kneel at the altar and pray for a while. There is only silence.");
+			else
+				console.print("The ones who erected this altar are weak and simple. Their dead god has nothing to offer you.");
 		} else {
 			int choice = rand.nextInt(3);
 			switch (choice) {
@@ -236,6 +241,16 @@ public class Map extends JPanel {
 						
 			}
 		}
+	}
+	
+	public void pillage() {
+		getCurrentTile().removeEntity("village");
+		p.maxFood += 3;
+		p.maxWater += 3;
+		p.maxHealth += 2;
+		p.decFood(3);
+		p.decWater(3);
+		p.razeCount++;
 	}
 	
 	public void toss(String name, int amount) {

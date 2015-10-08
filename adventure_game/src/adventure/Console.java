@@ -33,6 +33,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 		"A flock of birds fly overhead, going south. Winter is coming.",
 		"If only you had a stick and a rock, you could make a hammer.",
 		"If only you had a stick and something sharp, you could make an axe.",
+		"So many resources at hand, and you need only combine them.",
 		"You catch the faint smell of cooking meat.",
 		"You see heavy, rain-filled clouds on the horizon."
 	};
