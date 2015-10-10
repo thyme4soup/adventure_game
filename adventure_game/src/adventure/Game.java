@@ -55,6 +55,7 @@ public class Game extends JFrame implements ActionListener {
 	}
 	
 	public void death() {
+		console.print("");
 		console.print("The world around you starts to spin as you collapse. You are engulfed in darkness. "
 				+ "You lie down and close your eyes.");
 		remove(map);
@@ -67,6 +68,7 @@ public class Game extends JFrame implements ActionListener {
 		repaint();
 		revalidate();
 		console.field.requestFocus();
+		flashRed();
 	}
 	
 	public void handleCommand(String command) {
@@ -173,6 +175,8 @@ public class Game extends JFrame implements ActionListener {
 						map.p.combine(list);
 					} else console.print("You don't have all of those items!");
 				}
+			} else if (command.contains("make")) {
+				console.print("That won't work. Try 'combine.'");
 			} else if(command.contains("drink") || command.contains("water")) {
 				map.drink();
 			} else if(command.contains("climb") && command.contains("tree")) {
@@ -236,16 +240,23 @@ public class Game extends JFrame implements ActionListener {
 	}
 	
 	public void flashRed() {
-		
+		map.animate();
+		timer.start();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(!console.isAnimating()) {
+		if(!console.isAnimating() && !map.isAnimating()) {
 			timer.stop();
 			return;
 		}
-		console.animate();
-		console.repaint();
+		if(console.isAnimating()) {
+			console.animate();
+			console.repaint();
+		}
+		if(map.isAnimating()) {
+			map.animate();
+			map.repaint();
+		}
 	}
 }

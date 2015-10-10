@@ -74,7 +74,21 @@ public class Player {
 		else if(100*water/maxWater <= 40) status += "ou need water";
 		else if(100*water/maxWater <= 60) status += "ou feel a little thirsty";
 		
-		status += ".";
+		if(!status.equals("")) status += ". ";
+		
+		if(100*health/maxHealth <= 20) {
+			status += "You feel death reaching for you.";
+		}
+		else if(100*health/maxHealth <= 40) {
+			status += "You feel weak, you can't go much further in your state.";
+		}
+		else if(100*health/maxHealth <= 60) {
+			status += "You feel the effect of long travel taking its toll.";
+		}
+		else if(100*health/maxHealth <= 80) {
+			status += "Your pace is beginning to flag.";
+		}
+		
 		if(status.length() > 3) console.print(status);
 	}
 	

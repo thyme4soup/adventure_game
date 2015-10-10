@@ -20,6 +20,7 @@ public class Map extends JPanel {
 	static int dist = 4;
 	static Random rand;
 	
+	static boolean animating = false;
 	
 	public Map(int x, int y, int border, Console console, Game container) {
 		this.x = x;
@@ -377,10 +378,37 @@ public class Map extends JPanel {
 		}
 	}
 	
+	public void animate() {
+		int dif = 2;
+		if(animating == false) {
+			animating = true;
+			for(Tile[] tileRow : tiles)
+				for(Tile t : tileRow)
+					t.setBackground(new Color(45,2,2));
+			return;
+		}
+		Color cur = tiles[0][0].getBackground();
+		Color dest = new Color(0, 0, 0);
+		if(cur.getRed() <= dest.getRed() || cur.getRed() < dif) {
+			cur = dest;
+			animating = false;
+		}
+		if(cur.getRGB() != dest.getRGB()) {
+			cur = new Color(cur.getRed() - dif, cur.getGreen(), cur.getBlue());
+			for(Tile[] tileRow : tiles)
+				for(Tile t : tileRow) {
+					t.setBackground(cur);
+					Tile.setFade(new Color(cur.getRed(), cur.getGreen(), cur.getBlue(), Tile.getFade().getAlpha()));
+				}
+		}
+	}
+	
 	//get stuff
 	public Tile getCurrentTile() {return tiles[p.x][p.y];}
 	
 	public Player getPlayer() {return p;}
+	
+	public boolean isAnimating() {return animating;}
 }
 
 

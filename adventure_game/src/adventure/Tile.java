@@ -44,6 +44,7 @@ public class Tile extends JPanel{
 	public Tile(int width, int height, boolean isStart) {
 		this.width = width;
 		this.height = height;
+		this.setBackground(Color.BLACK);
 		background = Color.GREEN;
 		fade = new Color(0,0,0,0);
 		exposedCount = 0;
@@ -148,6 +149,7 @@ public class Tile extends JPanel{
 	}
 	
 	public static void setFade(Color c) {fade = c;}
+	public static Color getFade() {return fade;}
 	
 	@Override
 	public void paintComponent(Graphics g) {
@@ -164,7 +166,7 @@ public class Tile extends JPanel{
 			g.setColor(fade);
 			g.fillRect(0, 0, width, height);
 		} else {
-			g.setColor(Color.BLACK);
+			g.setColor(this.getBackground());
 			g.fillRect(0, 0, width, height);
 		}
 	}
