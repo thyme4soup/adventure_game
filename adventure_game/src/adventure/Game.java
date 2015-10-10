@@ -28,22 +28,7 @@ public class Game extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setBackground(Color.DARK_GRAY);
 		setResizable(false);
-		timer = new Timer(15, this);
-				
-		console = new Console(gameX + 2*borderW, consoleY + 2*borderW, borderW, this);
-		map = new Map(gameX + 2*borderW, mapY + 2*borderW, borderW, console, this);
-		
-		add(map);
-		add(console);
-
-		pack();
-		validate();
-		map.genTiles();
-		console.initLabels();
 		setFocusable(true);
-		setVisible(true);
-		console.begin();
-		console.print("You are asleep.");
 		//console.print(map.getCurrentTile().toString());
 	}
 
@@ -52,6 +37,24 @@ public class Game extends JFrame implements ActionListener {
 		Item.initializeItems();
 		Recipe.createRecipes();
 		Interaction.createInteractions();
+		game.start();
+	}
+	
+	public void start() {
+		timer = new Timer(15, this);
+		
+		console = new Console(gameX + 2*borderW, consoleY + 2*borderW, borderW, this);
+		map = new Map(gameX + 2*borderW, mapY + 2*borderW, borderW, console, this);
+		
+		add(map);
+		add(console);
+		pack();
+		validate();
+		map.genTiles();
+		console.initLabels();
+		console.begin();
+		console.print("You are asleep.");
+		setVisible(true);
 	}
 	
 	public void death() {
