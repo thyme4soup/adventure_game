@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -19,6 +20,14 @@ public class Game extends JFrame implements ActionListener {
 	
 	static int unknownCounter = 0;
 	static boolean unknownCalled = false;
+	static String[] dreams = new String[] {
+		"You're in a tunnel. The tunnel is long. You pick a direction and begin walking, but as you walk you find a dark and menacing shape before you. " +
+				"You turn and run back down the tunnel, but you find another dark shape slowly approaching. You turn and run again, only to become confronted with the first shape. " +
+				"Your legs grow tired as you run back and forth, and the shapes come closer and closer until you curl up on the ground, accepting your fate. You close your eyes.",
+		"You see before you a beautiful flower. You bend to pick it, but a sharp pain in your finger gives you pause. You pull back your hand to see a small bead of blood growing in size. You close your eyes.",
+		"You are aware of a colony of ants in a meadow. The colony is small. Yet, time passes and the ants build on their colony, expanding outwards and downwards. One colony becomes many colonies, and those colonies also expand outwards and downwards. " +
+				"As the expansion peaks, however, rain comes. The tunnels are filled and the ants die by the thousands. The subsequent sun finds only a few ants left, shattered and scattered. You close your eyes."
+	};
 	
 	public Game() {
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
@@ -190,7 +199,7 @@ public class Game extends JFrame implements ActionListener {
 				} else {
 					console.print("There are no trees to climb.");
 				}
-			} else if(command.contains("pillage") && command.contains("village")) {
+			} else if(command.contains("pillage")) {
 				if(map.getCurrentTile().contains("village")) {
 					if(map.p.hasWeapon()) {
 						console.print("You pillage the town... the simple townspeople fall meekly beneath your weapon and the huts take flame quickly. You feel yourself grow stronger.");
@@ -230,6 +239,11 @@ public class Game extends JFrame implements ActionListener {
 			map.tiles[map.p.x][map.p.y].setPlayer(true);
 			console.print("You open your eyes.");
 			console.print(map.getCurrentTile().toString());
+		} else if(command.contains("dream")) {
+			console.print("");
+			Random r = new Random();
+			console.print(dreams[r.nextInt(dreams.length)]);
+			console.print("You are asleep.");
 		} else {
 			console.unknown();
 			timer.start();
