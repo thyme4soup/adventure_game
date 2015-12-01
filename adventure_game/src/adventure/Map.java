@@ -379,20 +379,28 @@ public class Map extends JPanel {
 	}
 	
 	public void animate() {
-		int dif = 2;
+		//calculate gradient based on health percentage
+		int gradient = 130 - (100*p.health/p.maxHealth);
+		
 		if(animating == false) {
 			animating = true;
 			for(Tile[] tileRow : tiles)
 				for(Tile t : tileRow)
-					t.setBackground(new Color(45,2,2));
+					t.setBackground(new Color(gradient, 0, 0));
 			return;
 		}
+		
 		Color cur = tiles[0][0].getBackground();
 		Color dest = new Color(0, 0, 0);
+		
+		//Calculate dif to about 20 iterations
+		int dif = gradient/20;
+		
 		if(cur.getRed() <= dest.getRed() || cur.getRed() < dif) {
 			cur = dest;
 			animating = false;
 		}
+		
 		if(cur.getRGB() != dest.getRGB()) {
 			cur = new Color(cur.getRed() - dif, cur.getGreen(), cur.getBlue());
 			for(Tile[] tileRow : tiles)
