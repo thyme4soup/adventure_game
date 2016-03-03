@@ -27,6 +27,8 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	Game container;
 	GridBagConstraints c;
 	static boolean animating = false;
+	String queuedPrint = "";
+	int printCounter = 0;
 	
 	static final String[] hints = new String[] {
 		"You grow restless. Go north, if not south, west, or east.",
@@ -82,28 +84,41 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void print(String s) {
-		String toPrint = s;
+		queuedPrint = s;
+		printCounter = 0;
+		Game.timer.start();
+		animating = true;
+	}
+	public String addLine(String s) {
+		String toAdd = s;
 		int maxChars = 74;
 		boolean multiLine = false;
 		if(s.length() > maxChars) {
 			int i = maxChars;
 			while(i >= 0 && s.charAt(i) != ' ') i--;
 			if(i <= 0) i = maxChars;
-			toPrint = s.substring(0, i);
+			toAdd = s.substring(0, i);
 			multiLine = true;
 		}
-		
 		for(int i = 0; i < content.length - 1; i++) content[i] = content[i+1];
-		content[content.length - 1] = toPrint;
+		content[content.length - 1] = toAdd;
 		update();
 		//recursive handling of multi-line text
-		if(multiLine) print(s.substring(toPrint.length() + 1)); //+1 to cut out the un-needed space
+		if(multiLine) return (s.substring(toAdd.length() + 1)); //+1 to cut out the un-needed space
+		else return "";
 	}
 	
-	public void update() {		
+	public void update() {
+
+		field.setText("");
 		for(int i = 0; i < labels.length; i++) {
 			labels[i].setText(content[i]);
 		}
+	}
+	public void sleep(int t) {
+		try {
+			Thread.sleep(t);
+		} catch(Exception e) {e.printStackTrace();}
 	}
 	
 	public void begin() {
@@ -153,12 +168,19 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void animate() {
+		if(printCounter < queuedPrint.length()) {
+			field.setText(field.getText() + queuedPrint.charAt(printCounter++));
+			if(printCounter == queuedPrint.length() || field.getText().length() > 74) {
+				queuedPrint = addLine(queuedPrint);
+				printCounter = 0;
+			}
+		}
 		Color cur = field.getBackground();
 		Color dest = new Color(120, 120, 120);
 		if(cur.getRGB() != dest.getRGB()) {
 			field.setBackground(new Color(cur.getRed() - 10, cur.getGreen() - 1, cur.getBlue() - 1));
 		}
-		if(cur.getRed() < dest.getRed()) {
+		if(cur.getRed() < dest.getRed() && printCounter == queuedPrint.length()) {
 			field.setBackground(new Color(120, 120, 120));
 			//field.setBorder(null);
 			animating = false;

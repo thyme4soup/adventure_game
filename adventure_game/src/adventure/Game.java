@@ -23,10 +23,10 @@ public class Game extends JFrame implements ActionListener {
 	static String[] dreams = new String[] {
 		"You're in a tunnel. The tunnel is long. You pick a direction and begin walking, but as you walk you find a dark and menacing shape before you. " +
 				"You turn and run back down the tunnel, but you find another dark shape slowly approaching. You turn and run again, only to become confronted with the first shape. " +
-				"Your legs grow tired as you run back and forth, and the shapes come closer and closer until you curl up on the ground, accepting your fate. You close your eyes.",
-		"You see before you a beautiful flower. You bend to pick it, but a sharp pain in your finger gives you pause. You pull back your hand to see a small bead of blood growing in size. You close your eyes.",
+				"Your legs grow tired as you run back and forth, and the shapes come closer and closer until you curl up on the ground, accepting your fate. You close your eyes tight.",
+		"You see before you a beautiful flower. You bend to pick it, but a sharp pain in your finger gives you pause. You pull back your hand to see a small bead of blood growing in size. Your eyes water, but not for the pain. You close your eyes.",
 		"You are aware of a colony of ants in a meadow. The colony is small. Yet, time passes and the ants build on their colony, expanding outwards and downwards. One colony becomes many colonies, and those colonies also expand outwards and downwards. " +
-				"As the expansion peaks, however, rain comes. The tunnels are filled and the ants die by the thousands. The subsequent sun finds only a few ants left, shattered and scattered. You close your eyes."
+				"As the expansion peaks, however, rain comes. The tunnels are filled and the ants die by the thousands. The subsequent sun finds only a few ants left, shattered and scattered. You close your eyes in sorrow."
 	};
 	
 	public Game() {
@@ -47,6 +47,7 @@ public class Game extends JFrame implements ActionListener {
 		Recipe.createRecipes();
 		Interaction.createInteractions();
 		game.start();
+		Game.console.print("You are asleep.");
 	}
 	
 	public void start() {
@@ -62,7 +63,6 @@ public class Game extends JFrame implements ActionListener {
 		map.genTiles();
 		console.initLabels();
 		console.begin();
-		console.print("You are asleep.");
 		setVisible(true);
 	}
 	
