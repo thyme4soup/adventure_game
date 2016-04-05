@@ -28,7 +28,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	GridBagConstraints c;
 	static boolean animating = false;
 	String queuedPrint = "";
-	int printCounter = 0;
+	String printer = "";
 	
 	static final String[] hints = new String[] {
 		"You grow restless. Go north, if not south, west, or east.",
@@ -84,28 +84,31 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void print(String s) {
-		queuedPrint = s;
-		printCounter = 0;
+		queuedPrint += "%"+s;
 		Game.timer.start();
 		animating = true;
 	}
-	public String addLine(String s) {
-		String toAdd = s;
+	public String[] addLine(String s) {
+		String[] result = new String[2];
+		result[0] = s;
+		result[1] = "";
 		int maxChars = 74;
 		boolean multiLine = false;
-		if(s.length() > maxChars) {
+		int j = s.indexOf("%");
+		if(j >= 0) {
+			result[0] = s.substring(0, j);
+			multiLine = true;
+		}
+		else if(s.length() > maxChars) {
 			int i = maxChars;
 			while(i >= 0 && s.charAt(i) != ' ') i--;
 			if(i <= 0) i = maxChars;
-			toAdd = s.substring(0, i);
+			result[0] = s.substring(0, i);
 			multiLine = true;
 		}
-		for(int i = 0; i < content.length - 1; i++) content[i] = content[i+1];
-		content[content.length - 1] = toAdd;
-		update();
 		//recursive handling of multi-line text
-		if(multiLine) return (s.substring(toAdd.length() + 1)); //+1 to cut out the un-needed space
-		else return "";
+		if(multiLine) result[1] = (s.substring(result[0].length() + 1)); //+1 to cut out the un-needed space
+		return result;
 	}
 	
 	public void update() {
@@ -168,19 +171,35 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void animate() {
-		if(printCounter < queuedPrint.length()) {
-			field.setText(field.getText() + queuedPrint.charAt(printCounter++));
-			if(printCounter == queuedPrint.length() || field.getText().length() > 74) {
-				queuedPrint = addLine(queuedPrint);
-				printCounter = 0;
+		if(queuedPrint.length() > 0 || printer.length() > 0) { //only you can prevent forest fires
+			
+			if(printer.length() == 0 && queuedPrint.length() != 0) { //if printer is empty and there is still text queued
+				//chop off chunk and set chunk to printer
+				String[] input = addLine(queuedPrint);
+				queuedPrint = input[1];
+				printer = input[0];
 			}
-		}
+			if(printer.length() != 0) { //if printer either previously had text or has text now
+				field.setText(field.getText() + printer.charAt(0));
+				printer = printer.substring(1);
+			}
+			if(printer.length() == 0 && field.getText().length() > 0) { //if we just finished printing
+				for(int i = 0; i < content.length - 1; i++) content[i] = content[i+1];
+				content[content.length - 1] = field.getText();
+				update();
+			}
+			
+		} //end print animation code
+		
+		//begin color animation code
 		Color cur = field.getBackground();
 		Color dest = new Color(120, 120, 120);
-		if(cur.getRGB() != dest.getRGB()) {
+		if(cur.getRGB() != dest.getRGB() && cur.getRed() > dest.getRed()) {
 			field.setBackground(new Color(cur.getRed() - 10, cur.getGreen() - 1, cur.getBlue() - 1));
-		}
-		if(cur.getRed() < dest.getRed() && printCounter == queuedPrint.length()) {
+		} //end color animation code
+		
+		//animation finishing check
+		if(cur.getRed() < dest.getRed() && queuedPrint.length() == 0 && printer.length() == 0) {
 			field.setBackground(new Color(120, 120, 120));
 			//field.setBorder(null);
 			animating = false;
