@@ -17,7 +17,6 @@ public class Game extends JFrame implements ActionListener {
 	static Map map;
 	static Console console;
 	static Timer timer;
-	
 	static int unknownCounter = 0;
 	static boolean unknownCalled = false;
 	static String[] dreams = new String[] {
@@ -219,6 +218,24 @@ public class Game extends JFrame implements ActionListener {
 				death();
 			} else if(command.contains("pray")) {
 				map.pray();
+			} else if(map.getCurrentTile().contains("body")) {
+				if(command.contains("loot") || command.contains("search body"))
+					console.print("The body has only a few rags and a pair of well worn boots. They fit you perfectly.");
+				else if(command.contains("eat") && command.contains("body")) {
+					map.p.maxFood();
+					map.p.health -= 2;
+					console.print("The body is skeleton thin, but you tear in as only one facing starvation can. The skin gives way and the congealed blood explodes to the back of your throat, making you gag, but you continue." +
+							"As you ravage the body you grow more and more frenzied. The thighs are stripped in minutes. The cheeks fill your own. The eyes squish almost satisfyingly as you eat them, and you find that the hard lenses are particularly nice to suck on.");
+					console.print("You shove the mangled corpse under a bush to decompose completely");
+					map.getCurrentTile().removeEntity("body");
+				}
+				else if(command.contains("bury") && command.contains("body")) {
+					console.print("You set about burying the body. Shadows lengthen as you dig a shallow grave. "
+							+ "Once you finish, you drag the body over and lay it in. The body sags to the bottom of the grave, "
+							+ "and sighs as the first scoop of dirt lands on its stomach. After the grave is full you place a flower on the grave. "
+							+ "As you do so, your stomach rumbles.");
+					map.getCurrentTile().removeEntity("body");
+				}
 			} else if(command.contains("stats") 
 					|| command.contains("check myself")
 					|| command.contains("thirst")

@@ -83,11 +83,14 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 		update();
 	}
 	
+	//handle print queue additions
 	public void print(String s) {
-		queuedPrint += "%"+s;
+		queuedPrint += "%"+s; //%included in all cases
 		Game.timer.start();
-		animating = true;
+		animating = true; //for typing animation
 	}
+	
+	//for chopping off section to print and return resulting substring
 	public String[] addLine(String s) {
 		String[] result = new String[2];
 		result[0] = s;
@@ -95,18 +98,18 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 		int maxChars = 74;
 		boolean multiLine = false;
 		int j = s.indexOf("%");
-		if(j >= 0 && j < maxChars) {
+		if(j >= 0 && j < maxChars) { //check for new line code
 			result[0] = s.substring(0, j);
 			multiLine = true;
 		}
-		else if(s.length() > maxChars) {
+		else if(s.length() > maxChars) { //check for line overflow
 			int i = maxChars;
 			while(i >= 0 && s.charAt(i) != ' ') i--;
 			if(i <= 0) i = maxChars;
 			result[0] = s.substring(0, i);
 			multiLine = true;
 		}
-		//recursive handling of multi-line text
+		//recursive handling of multi-line text (in case of overflow or %)
 		if(multiLine) result[1] = (s.substring(result[0].length() + 1)); //+1 to cut out the un-needed space
 		return result;
 	}
@@ -118,26 +121,32 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 			labels[i].setText(content[i]);
 		}
 	}
+	
+	//for convenience
 	public void sleep(int t) {
 		try {
 			Thread.sleep(t);
 		} catch(Exception e) {e.printStackTrace();}
 	}
 	
+	//startup
 	public void begin() {
 		field.requestFocus();
 		field.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 	}
 	
+	//clear console
 	public void clear() {
 		for(int i = 0; i < content.length; i++) content[i] = " ";
 		update();
 	}
 	
+	//red flash for unknown command
 	public void unknown() {
 		Game.unknownCounter++;
 		Game.unknownCalled = true;
 		
+		//print random hint in the case of multiple unknowns
 		if(Game.unknownCounter > 1 && Game.unknownCounter % 4 == 0) {
 			if(container.map.p.awake) {
 				Random r = new Random();
@@ -147,10 +156,12 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		
+		//red
 		field.setBackground(new Color(225, 131, 131));
 		animating = true;
 	}
 	
+	//idk what this does
 	public void updateHist(String s) {
 		if(hist.length > 0)
 			for(int i = hist.length - 1; i > 0; i--) hist[i] = hist[i - 1];
@@ -159,6 +170,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//TODO: disable enter while animating
 		String s = e.getActionCommand().trim().toLowerCase();
 		histNum = -1;
 		if(!s.equals("")) {
@@ -170,6 +182,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 		if(!animating) field.setBackground(new Color(120, 120, 120));
 	}
 
+	//handle any animations
 	public void animate() {
 		if(queuedPrint.length() > 0 || printer.length() > 0) { //only you can prevent forest fires
 			
@@ -213,6 +226,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		//see action event todo
 		if(e.getKeyCode() == 38) {
 			if(histNum < hist.length - 1 && !hist[histNum + 1].equals("")) histNum++;
 			if(!hist[histNum].equals("")) field.setText(hist[histNum]);

@@ -109,7 +109,8 @@ public class Player {
 		return color;
 	}
 	
-	public void discovery(String type) {
+	public void discovery(String type) { //potential leveling system i guess
+		//TODO: add body discovery
 		switch(type) {
 		case "village":
 			console.print("The world seems smaller.");

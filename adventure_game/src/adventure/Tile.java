@@ -24,18 +24,21 @@ public class Tile extends JPanel{
 			"village",
 			"pond",
 			"rock",
-			"tree"
+			"tree",
+			"body"
 	};
 	int[] entityProbability = new int[] {
 			0,
 			20,
 			9,
 			5,
-			3
+			3,
+			0
 	};
 	boolean[] entityFat = new boolean[] {
 			true,
 			true,
+			false,
 			false,
 			false,
 			false
@@ -203,6 +206,11 @@ class Entity {
 			height = width;
 			c = new Color(16, 138, 11);
 			break;
+		case "body":
+			width = tileWidth/5;
+			height = width;
+			c = new Color(192, 192, 192);
+			break;
 		case "village":
 			width = tileWidth/2;
 			height = tileWidth/2;
@@ -274,6 +282,9 @@ class Entity {
 				break;
 			case "rock":
 				g.setColor(new Color(50, 50, 50));
+				break;
+			case "body":
+				g.setColor(new Color(192, 192, 192));
 				break;
 
 			default:

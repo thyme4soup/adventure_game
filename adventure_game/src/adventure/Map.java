@@ -11,6 +11,10 @@ import java.util.Random;
 
 public class Map extends JPanel {
 	static int x, y, border;
+	static boolean[] eventQueue = new boolean[] {
+		false,
+		false
+	};
 	Tile[][] tiles;
 	GridBagConstraints c;
 	Player p;
@@ -77,8 +81,8 @@ public class Map extends JPanel {
 		for(int i = 0; i < 15; i++) {
 			for(int j = 0; j < 15; j++) {
 				if(i == 7 && j == 8) continue;
+				handleMilestones(tiles[i][j]);
 				tiles[i][j].expose();
-				checkExposed();
 			}
 		}
 	}
@@ -144,8 +148,8 @@ public class Map extends JPanel {
 		for(int i = p.x - 1; i <= p.x + 1; i++) {
 			for(int j = p.y - 1; j <= p.y + 1; j++) {
 				if(!(i < 0 || j < 0 || i > tiles.length - 1 || j > tiles[i].length - 1)) {
+					handleMilestones(tiles[i][j]);
 					tiles[i][j].expose();
-					checkExposed();
 				}
 			}
 		}
@@ -334,8 +338,8 @@ public class Map extends JPanel {
 				p.discovery(e.type);
 			}
 		}
-		checkExposed();
 		if(moved) sponGen();
+		handleMilestones(getCurrentTile());
 		
 		//What you see when you get there
 		if(p.health > 0)
@@ -364,17 +368,19 @@ public class Map extends JPanel {
 		}
 	}
 	
-	public void checkExposed() {
-		//System.out.println("exposed: " + Tile.exposedCount);
-		if(Tile.exposedCount == (15 * 15) - 1) {
-			Tile last = null;
-			for(int i = 0; i < 15; i++) {
-				for(int j = 0; j < 15; j++) {
-					if(!tiles[i][j].exposed) last = tiles[i][j];
-				}
+	public void handleMilestones(Tile t) {
+		int lastTile = (15 * 15) - 1;
+		System.out.println(Tile.exposedCount);
+		if(Tile.exposedCount == 20 || eventQueue[0]) {
+			if(!t.containsFat()) {
+				t.addEntity("body");
+				eventQueue[0] = false;
 			}
-			last.entities.clear();
-			last.addEntity("altar");
+			else eventQueue[0] = true;
+		}
+		if(Tile.exposedCount == lastTile) {
+			t.entities.clear();
+			t.addEntity("altar");
 		}
 	}
 	
