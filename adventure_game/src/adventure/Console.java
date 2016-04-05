@@ -95,7 +95,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 		int maxChars = 74;
 		boolean multiLine = false;
 		int j = s.indexOf("%");
-		if(j >= 0) {
+		if(j >= 0 && j < maxChars) {
 			result[0] = s.substring(0, j);
 			multiLine = true;
 		}
