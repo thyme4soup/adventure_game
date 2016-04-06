@@ -29,6 +29,7 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 	static boolean animating = false;
 	String queuedPrint = "";
 	String printer = "";
+	String cleanPrinter = "";
 	
 	static final String[] hints = new String[] {
 		"You grow restless. Go north, if not south, west, or east.",
@@ -194,11 +195,13 @@ public class Console extends JPanel implements ActionListener, KeyListener {
 			}
 			if(printer.length() != 0) { //if printer either previously had text or has text now
 				field.setText(field.getText() + printer.charAt(0));
+				cleanPrinter += printer.charAt(0);
 				printer = printer.substring(1);
 			}
 			if(printer.length() == 0 && field.getText().length() > 0) { //if we just finished printing
 				for(int i = 0; i < content.length - 1; i++) content[i] = content[i+1];
-				content[content.length - 1] = field.getText();
+				content[content.length - 1] = cleanPrinter;
+				cleanPrinter = "";
 				update();
 			}
 			

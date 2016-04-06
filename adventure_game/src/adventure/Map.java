@@ -369,7 +369,7 @@ public class Map extends JPanel {
 	}
 	
 	public void handleMilestones(Tile t) {
-		int lastTile = (15 * 15) - 1;
+		int lastTile = (15 * 15);
 		System.out.println(Tile.exposedCount);
 		if(Tile.exposedCount == 20 || eventQueue[0]) {
 			if(!t.containsFat()) {
